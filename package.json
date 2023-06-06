@@ -4,8 +4,11 @@
   "description": "Instock 4 people group project server side",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --watch index.js"
+    "start": "node --watch index.js",
+    "migrate": "knex migrate:latest",
+    "down": "knex migrate:down",
+    "rollback": "knex migrate:rollback",
+    "seed": "knex seed:run"
   },
   "author": "Vincent Saba Thomas Aia",
   "license": "ISC",
