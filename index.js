@@ -6,7 +6,7 @@ const axios = require("axios");
 const warehouseRoutes = require("./routes/warehouse-routes");
 const inventoryRoutes = require("./routes/inventory-routes");
 
-const { PORT, BACKEND_URL, CORS_ORIGIN } = process.env;
+const { PORT, CORS_ORIGIN } = process.env;
 
 app.use(cors({ origin: CORS_ORIGIN }));
 app.use(express.json());
