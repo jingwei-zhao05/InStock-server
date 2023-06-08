@@ -1,6 +1,6 @@
 const knex = require("knex")(require("../knexfile"));
 
-const getInventory = (_req, res) => {
+const getInventories = (_req, res) => {
   knex("inventories")
     .then((data) => {
       res.status(200).json(data);
@@ -9,5 +9,5 @@ const getInventory = (_req, res) => {
 };
 
 module.exports = {
-  getInventory,
+  getInventories,
 };
