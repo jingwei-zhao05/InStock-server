@@ -80,9 +80,30 @@ const editWarehouse = (req, res) => {
     });
 };
 
+const removeWarehouse = (req, res) => {
+  knex("warehouses")
+      .where({ id: req.params.id })
+      .del()
+      .then((result) => {
+        if(result === 0){
+          return res.status(404).json({
+            message: `User with ID;${req.params.id} not found`
+          })
+        }
+
+        res.sendStatus(204);
+      })
+      .catch(()=> {
+        return res.status(500).json({
+          message: `Server issue can not delete user with id: ${req.params.id}`
+        })
+      })
+}
+
 module.exports = {
   getWarehouses,
   findWarehouse,
   editWarehouse,
   getWarehouseItems,
+  removeWarehouse,
 };
