@@ -10,23 +10,25 @@ const getWarehouse = (_req, res) => {
 
 const getWarehouseDetail = (req, res) => {
   knex("warehouses")
-  .where({ id: req.params.id})
+    .where({ id: req.params.id })
     .then((findWarehouse) => {
-      if (findWarehouse.length===0) {
+      if (findWarehouse.length === 0) {
         // Return 404 if the warehouse is not found
-        return res.status(404).json({ error: `Warehouse with ID: ${req.params.id} not found`});
+        return res
+          .status(404)
+          .json({ error: `Warehouse with ID: ${req.params.id} not found` });
       }
 
       res.json(findWarehouse[0]);
     })
     .catch(() => {
       res.status(500).json({
-        message:"Unable to retrieve warehouse data"
-      })
-    })
-}
+        message: "Unable to retrieve warehouse data",
+      });
+    });
+};
 
 module.exports = {
   getWarehouse,
-  getWarehouseDetail
+  getWarehouseDetail,
 };
