@@ -40,7 +40,13 @@ const editWarehouse = (req, res) => {
       contact_phone: req.body.contact_phone,
       contact_email: req.body.contact_email,
     })
-    .then(() => {
+    .then((result) => {
+      if (result === 0) {
+        return res.status(404).json({
+          message: `User with ID: ${req.params.id} not found.`,
+        });
+      }
+
       return knex("warehouses").where({
         id: req.params.id,
       });
