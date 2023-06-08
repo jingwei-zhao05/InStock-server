@@ -8,6 +8,8 @@ const getInventory = (_req, res) => {
     .catch((err) => res.status(400).send(`Error retrieving Users: ${err}`));
 };
 
+
 module.exports = {
   getInventory,
+  // getInventoryDetail
 };
