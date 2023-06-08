@@ -6,7 +6,8 @@ router.route("/").get(warehouseController.getWarehouses);
 router
   .route("/:id")
   .get(warehouseController.findWarehouse)
-  .put(validateWarehouse, warehouseController.editWarehouse);
+  .put(validateWarehouse, warehouseController.editWarehouse)
+  .delete(warehouseController.removeWarehouse);
 router.route("/:id/inventories").get(warehouseController.getWarehouseItems);
 
 module.exports = router;
