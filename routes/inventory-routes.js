@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const inventoryController = require("../controllers/inventory-controller");
 
-router.route("/").get(inventoryController.getJoinedTable);
-// router.route("/:id").get(inventoryController.getJoinedTable);
+router.route("/").get(inventoryController.getInventoriesJointWarehouse);
 module.exports = router;

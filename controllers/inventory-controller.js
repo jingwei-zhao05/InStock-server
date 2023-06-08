@@ -1,14 +1,6 @@
 const knex = require("knex")(require("../knexfile"));
 
-// const getInventory = (_req, res) => {
-//   knex("inventories")
-//     .then((data) => {
-//       res.status(200).json(data);
-//     })
-//     .catch((err) => res.status(400).send(`Error retrieving Users: ${err}`));
-// };
-
-const getJoinedTable = (req, res) => {
+const getInventoriesJointWarehouse = (req, res) => {
   knex
     .from("inventories")
     .select(
@@ -30,6 +22,5 @@ const getJoinedTable = (req, res) => {
 };
 
 module.exports = {
-  // getInventory,
-  getJoinedTable,
+  getInventoriesJointWarehouse,
 };
