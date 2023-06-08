@@ -7,5 +7,6 @@ router
   .route("/:id")
   .get(warehouseController.findWarehouse)
   .put(validateWarehouse, warehouseController.editWarehouse);
+router.route("/:id/inventories").get(warehouseController.getWarehouseItems);
 
 module.exports = router;
