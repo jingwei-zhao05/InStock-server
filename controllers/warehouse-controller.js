@@ -27,6 +27,25 @@ const findWarehouse = (req, res) => {
     });
 };
 
+const getWarehouseItems = (req, res) => {
+  knex("inventories")
+    .where({ warehouse_id: req.params.id })
+    .then((findInventory) => {
+      if (findInventory.length === 0) {
+        return res
+          .status(404)
+          .json({ error: `Inventory  with ID: ${req.params.id} not found` });
+      }
+
+      res.json(findInventory);
+    })
+    .catch(() => {
+      res.status(500).json({
+        message: "Unable to retrieve Inventory data",
+      });
+    });
+};
+
 const editWarehouse = (req, res) => {
   knex("warehouses")
     .where({ id: req.params.id })
@@ -65,4 +84,5 @@ module.exports = {
   getWarehouses,
   findWarehouse,
   editWarehouse,
+  getWarehouseItems,
 };
