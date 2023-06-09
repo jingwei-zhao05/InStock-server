@@ -4,6 +4,7 @@ const getInventoriesJointWarehouse = (req, res) => {
   knex
     .from("inventories")
     .select(
+      "inventories.id",
       "inventories.item_name",
       "inventories.category",
       "inventories.status",
