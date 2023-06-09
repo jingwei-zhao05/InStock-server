@@ -6,6 +6,9 @@ router
   .route("/")
   .get(inventoryController.getInventoriesJointWarehouse)
   .post(inventoryController.addInventoryItem);
-router.route("/:id").get(inventoryController.findInventoryItem);
+router
+  .route("/:id")
+  .get(inventoryController.findInventoryItem)
+  .delete(inventoryController.removeInventory);
 
 module.exports = router;
