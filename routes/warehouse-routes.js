@@ -5,7 +5,7 @@ const { validateWarehouse } = require("../middleware/warehouse-validator");
 router
   .route("/")
   .get(warehouseController.getWarehouses)
-  .post(warehouseController.postWarehouse);
+  .post(validateWarehouse, warehouseController.postWarehouse);
 router
   .route("/:id")
   .get(warehouseController.findWarehouse)
