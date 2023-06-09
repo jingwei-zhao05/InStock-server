@@ -80,25 +80,50 @@ const editWarehouse = (req, res) => {
     });
 };
 
+const postWarehouse = (req, res) => {
+  knex("warehouses")
+    .insert({
+      warehouse_name: req.body.warehouse_name,
+      address: req.body.address,
+      city: req.body.city,
+      country: req.body.country,
+      contact_name: req.body.contact_name,
+      contact_position: req.body.contact_position,
+      contact_phone: req.body.contact_phone,
+      contact_email: req.body.contact_email,
+    })
+    .then((result) => {
+      return knex("warehouses").where({ id: result[0] });
+    })
+    .then((createdWarehouse) => {
+      res.status(201).json(createdWarehouse);
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: `Unable to create warehouse. Error: ${error}`,
+      });
+    });
+};
+
 const removeWarehouse = (req, res) => {
   knex("warehouses")
-      .where({ id: req.params.id })
-      .del()
-      .then((result) => {
-        if(result === 0){
-          return res.status(404).json({
-            message: `User with ID;${req.params.id} not found`
-          })
-        }
+    .where({ id: req.params.id })
+    .del()
+    .then((result) => {
+      if (result === 0) {
+        return res.status(404).json({
+          message: `User with ID;${req.params.id} not found`,
+        });
+      }
 
-        res.sendStatus(204);
-      })
-      .catch(()=> {
-        return res.status(500).json({
-          message: `Server issue can not delete user with id: ${req.params.id}`
-        })
-      })
-}
+      res.sendStatus(204);
+    })
+    .catch(() => {
+      return res.status(500).json({
+        message: `Server issue can not delete user with id: ${req.params.id}`,
+      });
+    });
+};
 
 module.exports = {
   getWarehouses,
@@ -106,4 +131,5 @@ module.exports = {
   editWarehouse,
   getWarehouseItems,
   removeWarehouse,
+  postWarehouse,
 };
