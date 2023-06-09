@@ -1,6 +1,6 @@
 const knex = require("knex")(require("../knexfile"));
 
-const getInventoriesJointWarehouse = (req, res) => {
+const getInventoriesJointWarehouse = (_req, res) => {
   knex
     .from("inventories")
     .select(
@@ -39,7 +39,30 @@ const findInventoryItem = (req, res) => {
     });
 };
 
+const addInventoryItem = (req, res) => {
+  knex("inventories")
+    .insert({
+      warehouse_id: req.body.warehouse_id,
+      item_name: req.body.item_name,
+      description: req.body.description,
+      category: req.body.category,
+      status: req.body.status,
+      quantity: req.body.quantity,
+    })
+    .then((result) => {
+      return knex("inventories")
+        .where({ id: result[0] })
+        .then((createdInventory) => res.status(201).json(createdInventory));
+    })
+    .catch(() => {
+      res.status(500).json({
+        message: "Unable to create new inventory",
+      });
+    });
+};
+
 module.exports = {
   getInventoriesJointWarehouse,
   findInventoryItem,
+  addInventoryItem,
 };
