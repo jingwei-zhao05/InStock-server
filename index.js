@@ -17,18 +17,7 @@ app.use("/inventories", inventoryRoutes);
 app.get("/", (_req, res) => {
   res.send("Welcome to my API");
 });
-//////////////////////////////////////////////////
-// app.get("/inventories", (_req, res) => {
-//   knex
-//       .select("*")
-//       .from("inventories")
-//       .then((inventories) => {
-//           res.json(inventories);
-//         })
-//         .catch((error)=>{
-//           res.json(error);
-//       })
-// });
+
 
 app.listen(PORT, () => {
   console.log(`Running at http://localhost:${PORT}`);

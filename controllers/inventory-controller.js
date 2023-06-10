@@ -40,6 +40,39 @@ const findInventoryItem = (req, res) => {
     });
 };
 
+
+const editInventoryItem = (req, res) => {
+  knex("inventories")
+    .where({ id: req.params.id })
+    .update({
+      warehouse_id:  req.body.warehouse_id,
+      item_name:  req.body.item_name,
+      description:  req.body.description,
+      category:  req.body.category,
+      status:  req.body.status,
+      quantity: req.body.quantity
+    })
+    .then((result) => {
+      if (result === 0) {
+        return res.status(404).json({
+          message: `item with ID: ${req.params.id} not found.`,
+        });
+      }
+      console.log(req.body)
+      return knex("inventories").where({
+        id: req.params.id,
+      });
+    })
+    .then((updatedInventory) => {
+      res.json(updatedInventory[0]);
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: `Unable to update item with ID: ${req.params.id}`,
+      });
+    });
+};
+
 const addInventoryItem = (req, res) => {
   knex("inventories")
     .insert({
@@ -84,6 +117,7 @@ const removeInventory = (req, res) => {
 module.exports = {
   getInventoriesJointWarehouse,
   findInventoryItem,
-  addInventoryItem,
+  editInventoryItem,
   removeInventory,
+  addInventoryItem,
 };
