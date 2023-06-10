@@ -45,14 +45,12 @@ const editInventoryItem = (req, res) => {
   knex("inventories")
     .where({ id: req.params.id })
     .update({
-      warehouse_name: req.body.warehouse_name,
-      address: req.body.address,
-      city: req.body.city,
-      country: req.body.country,
-      contact_name: req.body.contact_name,
-      contact_position: req.body.contact_position,
-      contact_phone: req.body.contact_phone,
-      contact_email: req.body.contact_email,
+      warehouse_id:  req.body.warehouse_id,
+      item_name:  req.body.item_name,
+      description:  req.body.description,
+      category:  req.body.category,
+      status:  req.body.status,
+      quantity: req.body.quantity
     })
     .then((result) => {
       if (result === 0) {
@@ -60,15 +58,15 @@ const editInventoryItem = (req, res) => {
           message: `item with ID: ${req.params.id} not found.`,
         });
       }
-
-      return knex("warehouses").where({
+      console.log(req.body)
+      return knex("inventories").where({
         id: req.params.id,
       });
     })
-    .then((updatedWarehouse) => {
-      res.json(updatedWarehouse[0]);
+    .then((updatedInventory) => {
+      res.json(updatedInventory[0]);
     })
-    .catch(() => {
+    .catch((error) => {
       res.status(500).json({
         message: `Unable to update item with ID: ${req.params.id}`,
       });
