@@ -7,11 +7,11 @@ const validateWarehouse = [
   body("city").notEmpty().withMessage("City is required"),
   body("city")
     .matches(/^[A-Za-z\s]+$/)
-    .withMessage("City name should not contain numbers"),
+    .withMessage("Invalid city name"),
   body("country").notEmpty().withMessage("country is required"),
   body("country")
     .matches(/^[A-Za-z\s]+$/)
-    .withMessage("Country name should not contain numbers"),
+    .withMessage("Invalid country name "),
   body("contact_name").notEmpty().withMessage("Contact name is required"),
   body("contact_position")
     .notEmpty()

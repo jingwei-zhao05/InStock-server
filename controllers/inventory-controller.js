@@ -1,6 +1,6 @@
 const knex = require("knex")(require("../knexfile"));
 
-const getInventoriesJointWarehouse = (req, res) => {
+const getInventoriesJointWarehouse = (_req, res) => {
   knex
     .from("inventories")
     .select(
@@ -73,29 +73,51 @@ const editInventoryItem = (req, res) => {
     });
 };
 
+const addInventoryItem = (req, res) => {
+  knex("inventories")
+    .insert({
+      warehouse_id: req.body.warehouse_id,
+      item_name: req.body.item_name,
+      description: req.body.description,
+      category: req.body.category,
+      status: req.body.status,
+      quantity: req.body.quantity,
+    })
+    .then((result) => {
+      return knex("inventories")
+        .where({ id: result[0] })
+        .then((createdInventory) => res.status(201).json(createdInventory));
+    })
+    .catch(() => {
+      res.status(500).json({
+        message: "Unable to create new inventory",
+      });
+    });
+};
 const removeInventory = (req, res) => {
   knex("inventories")
-      .where({ id: req.params.id })
-      .del()
-      .then((result) => {
-        if(result === 0){
-          return res.status(404).json({
-            message: `User with ID;${req.params.id} not found`
-          })
-        }
+    .where({ id: req.params.id })
+    .del()
+    .then((result) => {
+      if (result === 0) {
+        return res.status(404).json({
+          message: `User with ID;${req.params.id} not found`,
+        });
+      }
 
-        res.sendStatus(204);
-      })
-      .catch(()=> {
-        return res.status(500).json({
-          message: `Server issue can not delete user with id: ${req.params.id}`
-        })
-      })
-}
+      res.sendStatus(204);
+    })
+    .catch(() => {
+      return res.status(500).json({
+        message: `Server issue can not delete user with id: ${req.params.id}`,
+      });
+    });
+};
 
 module.exports = {
   getInventoriesJointWarehouse,
   findInventoryItem,
   editInventoryItem,
-  removeInventory
+  removeInventory,
+  addInventoryItem,
 };
