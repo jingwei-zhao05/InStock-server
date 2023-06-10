@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const inventoryController = require("../controllers/inventory-controller");
-// const { validateInventory } = require("../middleware/Inventory-validator");
+const { validateInventory } = require("../middleware/inventory-validator");
 
 router
   .route("/")
