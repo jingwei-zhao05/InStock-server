@@ -5,11 +5,11 @@ const { validateInventory } = require("../middleware/inventory-validator");
 router
   .route("/")
   .get(inventoryController.getInventoriesJointWarehouse)
-  .post(inventoryController.addInventoryItem);
+  .post(validateInventory, inventoryController.addInventoryItem);
 router
   .route("/:id")
   .get(inventoryController.findInventoryItem)
-  .put(inventoryController.editInventoryItem)
+  .put(validateInventory, inventoryController.editInventoryItem)
   .delete(inventoryController.removeInventory);
 
 module.exports = router;
