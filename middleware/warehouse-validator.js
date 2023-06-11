@@ -23,7 +23,7 @@ const validateWarehouse = [
       return /^\+1\s?\(\d{3}\)\s?\d{3}-\d{4}$/.test(value);
     })
     .withMessage(
-      "Invalid phone number, the format should follow: +1 (123) 123-1234"
+      "Invalid phone number, the format should follow: +1 (xxx) xxx-xxxx"
     ),
   body("contact_email")
     .notEmpty()
