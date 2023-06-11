@@ -16,26 +16,30 @@ const validateInventory = [
     .withMessage('status must be "In Stock" or "Out of Stock"'),
 
   // Validate the quantity based on the status
-  //   body("quantity").custom((value, { req }) => {
-  //     const status = req.body.status;
-  //     if (status === "Out of Stock" && value !== 0) {
-  //       throw new Error('If status is "Out of Stock", quantity must be 0');
-  //     }
-  //     if (status === "In Stock" && (!Number.isInteger(value) || value <= 0)) {
-  //       throw new Error(
-  //         'If status is "In Stock", quantity must be a positive integer'
-  //       );
-  //     }
-  //     return true;
-  //   }),
+  body("quantity").custom((value, { req }) => {
+    const status = req.body.status;
+    if (status === "Out of Stock" && value !== 0) {
+      throw new Error('If status is "Out of Stock", quantity must be 0');
+    }
+    if (status === "In Stock" && (!Number.isInteger(value) || value <= 0)) {
+      throw new Error(
+        'If status is "In Stock", quantity must be a positive integer'
+      );
+    }
+    return true;
+  }),
 
-  // Validate that warehouse_id exists in the warehouses table
-  //   body("warehouse_id").custom((value) => {
-  //     const warehouse = knex("warehouses").where({ id: value }).first();
-  //     if (!warehouse) {
-  //       throw new Error("Invalid warehouse_id");
-  //     }
-  //   }),
+  //   Validate that warehouse_id exists in the warehouses table
+  body("warehouse_id").custom((value) => {
+    return knex("warehouses")
+      .where({ id: value })
+      .first()
+      .then((warehouse) => {
+        if (!warehouse) {
+          return Promise.reject("Invalid warehouse_id");
+        }
+      });
+  }),
 
   // Custom middleware function to handle validation errors
   (req, res, next) => {
