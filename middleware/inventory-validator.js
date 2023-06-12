@@ -21,7 +21,7 @@ const validateInventory = [
     if (status === "Out of Stock" && value !== 0) {
       throw new Error('If status is "Out of Stock", quantity must be 0');
     }
-    if (status === "In Stock" && (!Number.isInteger(value) || value <= 0)) {
+    if (status === "In Stock" && value <= 0) {
       throw new Error(
         'If status is "In Stock", quantity must be a positive integer'
       );
